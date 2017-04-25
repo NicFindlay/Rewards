@@ -4,6 +4,7 @@ from .models import Glance, Profile
 from .forms import SendGlance
 from django.contrib.auth.views import login, logout
 
+
 # Create your views here.
 
 def check_authentication(request, *args, **kwargs):
@@ -25,7 +26,7 @@ def index(request):
     if request.user.is_authenticated():
         username = request.user.username
         user_id = request.user.id
-        print(username)
+
 
 
     context = {
@@ -37,18 +38,44 @@ def index(request):
 
     return render(request, 'Glancer/index.html', context)
 
-def user(request):
+def user(request, user_id):
 
-    user_flag = True
-    print(user_flag)
-    return render(request, 'Glancer/index.html')
+    # Get username
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+
+    #Finding user object
+    user_object = None
+    user_list = Profile.objects.order_by('user__first_name')
+    for user in user_list:
+        if str(user.user_id) == str(user_id):
+            user_object = user
+
+    glance_number = user_object.glance_number
+    glance_giveaway = user_object.glance_giveaway
+
+    glance_list = ['']
+    glance_all = Glance.objects.all().order_by('date')
+    for glance in glance_all:
+        if(glance.receiver == user_object):
+            glance_list.append(glance)
+
+
+    context = {
+        'user_id' : user_id,
+        'username' : username,
+        'user_object' : user_object,
+        'glance_number' : glance_number,
+        'glance_list' : glance_list,
+        'glance_giveaway' : glance_giveaway
+    }
+    return render(request, 'Glancer/user.html', context)
 
 def send(request):
 
     user_list = Profile.objects.order_by('user__first_name')
-
     form = SendGlance()
-
 
     if request.method == 'POST':
         form = SendGlance(request.POST)
@@ -72,6 +99,12 @@ def thanks(request):
 
     }
     return render(request, 'Glancer/thanks.html', context )
+
+
+def glance_giveaway():
+    return;
+
+
 
 
 

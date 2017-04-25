@@ -10,6 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     glance_number = models.PositiveIntegerField(blank='false', default=0)
+    glance_giveaway = models.PositiveIntegerField(blank='false', default=0)
 
     def __str__(self):
         return str(self.user.first_name + " " + self.user.last_name)
@@ -34,4 +35,4 @@ class Glance(models.Model):
     receiver = models.ForeignKey(Profile, related_name="glance_receiver", on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.date, self.receiver.user.first_name)
+        return str(self.receiver.user.first_name)

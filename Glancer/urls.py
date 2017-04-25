@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^send/', views.send, name='send'),
     url(r'^thanks/', views.thanks, name='thanks'),
 
-    url(r'^(?P<profile_id>[0-9]+/$)', views.user, name='user'),
+    url(r'^user/(?P<user_id>[0-9]+)/$', views.user, name='user'),
 
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
