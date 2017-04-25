@@ -63,7 +63,14 @@
                         <a class="page-scroll" href="#contact">Contact</a>
                     </li>
                     <li>
-                        <a class="" href="#">Login</a>
+                        {% if not authentic %}
+                            <a class="" href="/login/">Login</a>
+
+                            {% else %}
+                            <a class="" href="/{{ user_id }}/">Hi {{ username }}!</a>
+
+                        {% endif %}
+
                     </li>
                 </ul>
             </div>
