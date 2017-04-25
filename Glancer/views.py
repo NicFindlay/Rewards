@@ -81,12 +81,12 @@ def send(request):
     if request.method == 'POST':
         form = SendGlance(request.POST)
         if form.is_valid():
-            print(request.POST.get('recipient'))
-            print(request.POST.get('description'))
 
             for user in user_list:
                 if str(user.id) == str(request.POST.get('recipient')):
                     user.glance_number = user.glance_number + 1
+                    user.save()
+                    print(user.glance_number)
                     create_glance(user, request.POST.get('description'))
 
             return HttpResponseRedirect('/thanks/')
@@ -113,13 +113,11 @@ def glance_giveaway():
 
 def create_glance(user, description):
     # NIC
-    glance = Glance()
-    glance.date = date.today()
-    glance.receiver = user
-    glance.description = description
-    print("xx", glance)
+    Receiver = user
+    Description = description
+    glance = Glance.create(date.today(), Description, Receiver)
 
-    return;
+
 
 
 
