@@ -3,6 +3,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from .models import Glance, Profile
 from .forms import SendGlance
 from django.contrib.auth.views import login, logout
+from datetime import date
 
 
 # Create your views here.
@@ -82,6 +83,12 @@ def send(request):
         if form.is_valid():
             print(request.POST.get('recipient'))
             print(request.POST.get('description'))
+
+            for user in user_list:
+                if str(user.id) == str(request.POST.get('recipient')):
+                    user.glance_number = user.glance_number + 1
+                    create_glance(user, request.POST.get('description'))
+
             return HttpResponseRedirect('/thanks/')
 
 
@@ -102,6 +109,16 @@ def thanks(request):
 
 
 def glance_giveaway():
+    return;
+
+def create_glance(user, description):
+    # NIC
+    glance = Glance()
+    glance.date = date.today()
+    glance.receiver = user
+    glance.description = description
+    print("xx", glance)
+
     return;
 
 

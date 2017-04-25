@@ -69,8 +69,11 @@
     <!-- /.container-fluid -->
 </nav>
 
-<section class="col-lg-6">
-
+<section class="col-sm-12">
+    <h2 style="text-align: center">Send a Glance to a Co-Worker</h2>
+</section>
+<div class="col-sm-4"></div>
+<div class="col-sm-4">
     <form action="" method="post">
         {% csrf_token %}
         {{ form|linebreaksbr|linebreaksbr }}
@@ -78,7 +81,7 @@
         <input type="submit" value="Submit" name="glance_recipt" >
     </form>
 
-</section>
+</div>
 
 </body>
 </html>

@@ -26,13 +26,15 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+
 #Glance model. Defines Glance (Point) class
 class Glance(models.Model):
     value = 1
-    date = models.DateTimeField('Date Sent')
+    date = models.DateField('Date Sent')
     description = models.TextField(max_length=200, blank=True)
-    sender = models.ForeignKey( Profile, related_name="glance_sender", on_delete=models.CASCADE)
     receiver = models.ForeignKey(Profile, related_name="glance_receiver", on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.receiver.user.first_name)
+
+
