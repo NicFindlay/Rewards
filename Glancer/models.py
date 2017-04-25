@@ -23,6 +23,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+
 #Glance model. Defines Glance (Point) class
 class Glance(models.Model):
     value = 1

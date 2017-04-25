@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Glancer</title>
+</head>
+<body>
+    <h1>Glancer</h1>
+
+    {%  if user_list %}
+
+        <ol>
+            {% for user in user_list %}
+                <li><a href="#">{{ user }}</a></li>
+            {% endfor %}
+        </ol>
+
+    {% endif %}
+
+
+
+</body>
+</html>
