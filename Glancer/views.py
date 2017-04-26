@@ -6,10 +6,7 @@ from .forms import SendGlance
 from django.contrib.auth.views import login, logout
 from datetime import date
 
-
 all_users = Profile.objects.order_by('user__first_name')
-
-
 # Create your views here.
 
 def check_authentication(request, *args, **kwargs):
