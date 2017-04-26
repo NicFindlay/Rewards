@@ -33,6 +33,8 @@ def index(request):
         username = request.user.username
         user_id = request.user.id
 
+    print(user_id)
+
     context = {
         'user_list': user_list,
         'authentic' : authentic,
@@ -76,9 +78,16 @@ def user(request, user_id):
     return render(request, 'Glancer/user.html', context)
 
 
+
 def send(request):
 
     user_list = all_users
+    # Get username
+    username = None
+    user_id = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        user_id = request.user.id
 
     form = SendGlance()
 
@@ -96,13 +105,23 @@ def send(request):
     context = {
         'user_list': user_list,
         'form': form,
+        'user_id' : user_id,
     }
     return render(request, 'Glancer/send.html', context)
 
 
 def thanks(request):
 
+    # Get username
+    username = None
+    user_id = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        user_id = request.user.id
+
     context = {
+        'user_list': all_users,
+        'user_id' : user_id
     }
     return render(request, 'Glancer/thanks.html', context )
 
