@@ -21,22 +21,17 @@
     <link rel="stylesheet" href="{% static "Glancer/lib/font-awesome/css/font-awesome.min.css"%}">
     <link rel="stylesheet" href="{% static "Glancer/lib/simple-line-icons/css/simple-line-icons.css"%}">
     <link rel="stylesheet" href="{% static "Glancer/lib/device-mockups/device-mockups.min.css"%}">
-
     <!-- Theme CSS -->
     <link href="{% static "Glancer/css/new-age.min.css"%}" rel="stylesheet">
+    <link href="{% static "Glancer/css/custom.css"%}" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 </head>
 
 <body id="page-top">
 
-<nav id="mainNav" style="background-color: purple;" class="navbar navbar-default navbar-fixed-top">
+<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -44,31 +39,30 @@
                     data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
             </button>
-            <a class="navbar-brand page-scroll" href="/#page-top">Glancer</a>
+            <a class="navbar-brand page-scroll" href="/">Glancer</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a class="page-scroll" href="#download">Download</a>
+                    <a class="page-scroll" href="/#download">Download</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#features">Features</a>
+                    <a class="page-scroll" href="/#features">Features</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="#contact">Contact</a>
+                    <a class="page-scroll" href="/#contact">Contact</a>
                 </li>
                  <li>
                         {% if not authentic %}
                             <a class="" href="/login/">Login</a>
-
                             {% else %}
                             <a class="" href="/user/{{ user_id }}">Hi {{ username }}!</a>
-
+                            <li>
+                                <a class="page-scroll" href="/logout/">Logout</a>
+                             </li>
                         {% endif %}
-
-                 </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
