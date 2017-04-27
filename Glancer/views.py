@@ -13,45 +13,25 @@ def check_authentication(request, *args, **kwargs):
     user_flag = login(request, *args, *kwargs)
     return user_flag
 
-
 def index(request):
-    user_list = all_users
 
-    # Get username and check authenticity
-    authentic = False
-    username = None
-    user_id = None
-    if request.user.is_authenticated():
-        username = request.user.username
-        user_id = request.user.id
-        authentic = True
+    context = constructor(request)
 
-    print(user_id)
+    more_context = {
 
-    context = {
-        'user_list': user_list,
-        'authentic' : authentic,
-        'username' : username,
-        'user_id' : user_id,
     }
+    context.update(more_context)
 
     return render(request, 'Glancer/index.html', context)
 
 def user(request, user_id):
 
-    # Get username and check authenticity
-    authentic = False
-    username = None
-    user_id = None
-    if request.user.is_authenticated():
-        username = request.user.username
-        user_id = request.user.id
-        authentic = True
+    context = constructor(request)
 
     #Finding user object
     user_object = None
-    user_list = all_users
-    for user in user_list:
+
+    for user in all_users:
         if str(user.user_id) == str(user_id):
             user_object = user
 
@@ -64,38 +44,27 @@ def user(request, user_id):
         if(glance.receiver == user_object):
             glance_list.append(glance)
 
-    context = {
-        'user_id' : user_id,
-        'username' : username,
+    more_context = {
         'user_object' : user_object,
         'glance_number' : glance_number,
         'glance_list' : glance_list,
         'glance_giveaway' : glance_giveaway,
-        'authentic' : authentic
     }
+    context.update(more_context)
+
     return render(request, 'Glancer/user.html', context)
 
 
 
 def send(request):
-    user_list = all_users
-
-    # Get username
-    # Get username and check authenticity
-    authentic = False
-    username = None
-    user_id = None
-    if request.user.is_authenticated():
-        username = request.user.username
-        user_id = request.user.id
-        authentic = True
+    context = constructor(request)
 
     form = SendGlance()
 
     if request.method == 'POST':
         form = SendGlance(request.POST)
         if form.is_valid():
-            for user in user_list:
+            for user in all_users:
                 if str(user.id) == str(request.POST.get('recipient')):
                         user.glance_number = user.glance_number + 1       #incrementing Total Glance number
                         user.save()                                         #Saving User Profile instance
@@ -103,32 +72,24 @@ def send(request):
 
             return HttpResponseRedirect('/thanks/')  #Returning 'Thank You' page
 
-    context = {
-        'user_list': user_list,
+    more_context = {
+        'user_list': all_users,
         'form': form,
-        'user_id' : user_id,
-        'authentic' : authentic,
-        'username' : username,
     }
+    context.update(more_context)
+
     return render(request, 'Glancer/send.html', context)
 
 
 def thanks(request):
 
-    # Get username and check authenticity
-    authentic = False
-    username = None
-    user_id = None
-    if request.user.is_authenticated():
-        username = request.user.username
-        user_id = request.user.id
-        authentic = True
+    context = constructor(request)
 
-    context = {
+    more_context = {
         'user_list': all_users,
-        'user_id' : user_id,
-        'authentic' : authentic,
     }
+    context.update(more_context)
+
     return render(request, 'Glancer/thanks.html', context )
 
 
@@ -142,15 +103,23 @@ def create_glance(user, description):
     glance = Glance.create(date.today(), Description, Receiver)
 
 
+def constructor(request):
 
+    # Get username and check authenticity
+    authentic = False
+    username = None
+    user_id = None
+    if request.user.is_authenticated():
+        username = request.user.username
+        user_id = request.user.id
+        authentic = True
 
-
-
-
-
-
-
-
-
+    context = {
+        'user_list': all_users,
+        'authentic': authentic,
+        'username': username,
+        'user_id': user_id,
+    }
+    return context;
 
 
