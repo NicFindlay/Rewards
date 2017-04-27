@@ -13,6 +13,13 @@ def check_authentication(request, *args, **kwargs):
     user_flag = login(request, *args, *kwargs)
     return user_flag
 
+def find_current_user(request):
+    for user in all_users:
+        if user.user_id == request.user.id:
+            print("XXXSSS")
+            return user
+    return None
+
 def index(request):
 
     context = constructor(request)
@@ -25,12 +32,10 @@ def index(request):
     return render(request, 'Glancer/index.html', context)
 
 def user(request, user_id):
-
     context = constructor(request)
 
     #Finding user object
     user_object = None
-
     for user in all_users:
         if str(user.user_id) == str(user_id):
             user_object = user
@@ -58,19 +63,25 @@ def user(request, user_id):
 
 def send(request):
     context = constructor(request)
-
+    current_user = find_current_user(request)  # find user who sent glance
     form = SendGlance()
 
-    if request.method == 'POST':
-        form = SendGlance(request.POST)
-        if form.is_valid():
-            for user in all_users:
-                if str(user.id) == str(request.POST.get('recipient')):
-                        user.glance_number = user.glance_number + 1       #incrementing Total Glance number
-                        user.save()                                         #Saving User Profile instance
-                        create_glance(user, request.POST.get('description'))  #Instantiating new Glance
+    if current_user.glance_giveaway > 0:  #checking if user has glances to give away
+        if request.method == 'POST':  #If submit has been clicked
+            form = SendGlance(request.POST)
+            if form.is_valid():
+                for user in all_users:
+                    if str(user.id) == str(request.POST.get('recipient')):
+                            user.glance_number = user.glance_number + 1       #incrementing Total Glance number
 
-            return HttpResponseRedirect('/thanks/')  #Returning 'Thank You' page
+                            current_user.glance_giveaway = current_user.glance_giveaway - 1   #decrementing Total Glance giveaway
+
+                            user.save()                                         #Saving User Profile instance
+                            create_glance(user, request.POST.get('description'))  #Instantiating new Glance
+
+                return HttpResponseRedirect('/thanks/')  #Returning 'Thank You' page
+    else:
+        return HttpResponseRedirect('/limit/') #Add limit page
 
     more_context = {
         'user_list': all_users,
@@ -91,6 +102,17 @@ def thanks(request):
     context.update(more_context)
 
     return render(request, 'Glancer/thanks.html', context )
+
+def limit(request):
+
+    context = constructor(request)
+
+    more_context = {
+        'user_list': all_users,
+    }
+    context.update(more_context)
+
+    return render(request, 'Glancer/limit.html', context )
 
 
 def glance_giveaway():

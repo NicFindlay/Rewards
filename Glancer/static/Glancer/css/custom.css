@@ -1,8 +1,26 @@
 .navbar-brand{
     font-size: 28px;
 }
-
 .navbar{
     background-color: black;
 }
+
+.features{
+    background-color: #fff;
+}
+
+.bg-primary{
+    background: #1b6d85;
+}
+
+
+.btn{
+    border-color: purple;
+    color:purple;
+}
+.btn:hover{
+    background-color: #1b6d85;
+}
+
+
 

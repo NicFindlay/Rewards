@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^send/', views.send, name='send'),
     url(r'^thanks/', views.thanks, name='thanks'),
+    url(r'^limit/', views.limit, name='limit'),
 
     url(r'^user/(?P<user_id>[0-9]+)/$', views.user, name='user'),
 
