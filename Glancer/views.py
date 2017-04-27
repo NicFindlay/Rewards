@@ -15,20 +15,16 @@ def check_authentication(request, *args, **kwargs):
 
 
 def index(request):
-
     user_list = all_users
 
-    #Check if user authenticated
+    # Get username and check authenticity
     authentic = False
-    if request.user.is_authenticated():
-        authentic = True
-
-    #Get username
     username = None
     user_id = None
     if request.user.is_authenticated():
         username = request.user.username
         user_id = request.user.id
+        authentic = True
 
     print(user_id)
 
@@ -43,10 +39,14 @@ def index(request):
 
 def user(request, user_id):
 
-    # Get username
+    # Get username and check authenticity
+    authentic = False
     username = None
+    user_id = None
     if request.user.is_authenticated():
         username = request.user.username
+        user_id = request.user.id
+        authentic = True
 
     #Finding user object
     user_object = None
@@ -70,21 +70,25 @@ def user(request, user_id):
         'user_object' : user_object,
         'glance_number' : glance_number,
         'glance_list' : glance_list,
-        'glance_giveaway' : glance_giveaway
+        'glance_giveaway' : glance_giveaway,
+        'authentic' : authentic
     }
     return render(request, 'Glancer/user.html', context)
 
 
 
 def send(request):
-
     user_list = all_users
+
     # Get username
+    # Get username and check authenticity
+    authentic = False
     username = None
     user_id = None
     if request.user.is_authenticated():
         username = request.user.username
         user_id = request.user.id
+        authentic = True
 
     form = SendGlance()
 
@@ -103,22 +107,27 @@ def send(request):
         'user_list': user_list,
         'form': form,
         'user_id' : user_id,
+        'authentic' : authentic,
+        'username' : username,
     }
     return render(request, 'Glancer/send.html', context)
 
 
 def thanks(request):
 
-    # Get username
+    # Get username and check authenticity
+    authentic = False
     username = None
     user_id = None
     if request.user.is_authenticated():
         username = request.user.username
         user_id = request.user.id
+        authentic = True
 
     context = {
         'user_list': all_users,
-        'user_id' : user_id
+        'user_id' : user_id,
+        'authentic' : authentic,
     }
     return render(request, 'Glancer/thanks.html', context )
 
