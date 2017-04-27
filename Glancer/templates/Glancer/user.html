@@ -23,12 +23,9 @@
                     <h3>Giveaway Glances: {{ glance_giveaway }}</h3>
                     <a href="/send/" class="btn btn-outline btn-xl page-scroll">Send a Glance!</a>
 
-                    <h3>Glance History:</h3>
-                    {% for glance in glance_list %}
-                        <ul>
-                        <a>{{ glance.date.date }} </a>
-                        </ul>
-                    {% endfor %}
+                    <p></p>
+
+                    <a href="/history/" class="btn btn-outline btn-xl page-scroll">Glance History</a>
 
                 </div>
             </div>
