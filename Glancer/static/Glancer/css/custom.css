@@ -2,7 +2,7 @@
     font-size: 28px;
 }
 .navbar{
-    background-color: black;
+    background-color: #000;
 }
 
 .features{
@@ -13,6 +13,15 @@
     background: #1b6d85;
 }
 
+section{
+    padding: 50px 0;
+}
+
+#main-button{
+    color: #fff;
+    border-color: #f9f2f4;
+}
+
 
 .btn{
     border-color: #1b6d85;
@@ -21,6 +30,16 @@
 .btn:hover{
     background-color: #1b6d85;
 }
+
+header{
+    min-height: 500px !important;
+    height: 500px !important;
+}
+header .header-content .header-content-inner{
+    top: 38% !important;
+}
+
+
 
 
 
