@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^thanks/', views.thanks, name='thanks'),
     url(r'^limit/', views.limit, name='limit'),
 
+    url(r'^history/', views.history, name='history'),
+
     url(r'^user/(?P<user_id>[0-9]+)/$', views.user, name='user'),
 
     url(r'^login/$', auth_views.login, name='login'),

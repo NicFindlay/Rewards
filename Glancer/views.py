@@ -103,6 +103,18 @@ def thanks(request):
 
     return render(request, 'Glancer/thanks.html', context )
 
+def history(request):
+
+
+    context = constructor(request)
+    more_context = {
+        'user_list': all_users,
+    }
+    context.update(more_context)
+
+
+    return render(request, 'Glancer/history.html', context)
+
 def limit(request):
 
     context = constructor(request)
