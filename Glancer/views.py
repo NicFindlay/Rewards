@@ -34,6 +34,9 @@ def index(request):
 def user(request, user_id):
     context = constructor(request)
 
+    if str(user_id) != str(request.user.id):
+        return HttpResponse("Not today sucker")
+
     #Finding user object
     user_object = None
     for user in all_users:
@@ -157,6 +160,6 @@ def constructor(request):
         'username': username,
         'user_id': user_id,
     }
-    return context;
+    return context
 
 
