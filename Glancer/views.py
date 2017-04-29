@@ -40,6 +40,9 @@ def user(request, user_id):
         if str(user.user_id) == str(user_id):
             user_object = user
 
+    company_object = user_object.company
+
+
     glance_number = user_object.glance_number
     glance_giveaway = user_object.glance_giveaway
 
@@ -54,6 +57,7 @@ def user(request, user_id):
         'glance_number' : glance_number,
         'glance_list' : glance_list,
         'glance_giveaway' : glance_giveaway,
+        'company_object' : company_object,
     }
     context.update(more_context)
 
@@ -104,7 +108,6 @@ def thanks(request):
     return render(request, 'Glancer/thanks.html', context )
 
 def history(request):
-
 
     context = constructor(request)
     more_context = {

@@ -5,12 +5,17 @@ from django.dispatch import receiver
 
 # Create your models here.
 
+#Company
+class Company(models.Model):
+    name = models.CharField(blank="False", max_length=100)
+
 #User profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     glance_number = models.PositiveIntegerField(blank='false', default=0)
     glance_giveaway = models.PositiveIntegerField(blank='false', default=1)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return str(self.user.first_name + " " + self.user.last_name)
@@ -32,6 +37,7 @@ class Glance(models.Model):
     description = models.TextField(max_length=200, blank=True)
     receiver = models.ForeignKey(Profile, related_name="glance_receiver", on_delete=models.CASCADE)
 
+
     def __str__(self):
         return str(self.receiver.user.first_name + " | " + str(self.date))
 
@@ -41,3 +47,4 @@ class Glance(models.Model):
         glance = cls(date = Date, description=Description, receiver=Receiver)
         glance.save()
         return glance
+
