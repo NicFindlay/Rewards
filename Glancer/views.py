@@ -9,6 +9,7 @@ from datetime import date
 all_users = Profile.objects.order_by('user__first_name')
 all_glances = Glance.objects.order_by('receiver')
 all_companies = Company.objects.order_by('name')
+all_reviews = Review.objects.all()
 # Create your views here.
 
 def check_authentication(request, *args, **kwargs):
