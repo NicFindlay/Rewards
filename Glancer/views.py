@@ -143,7 +143,7 @@ def review(request):
         if form.is_valid():
             current_user.company.save()  # Saving company instance
             Review.create(date.today(), request.POST.get('review'))  # Instantiating new Review Object
-            return HttpResponseRedirect('/thanks/')  # Returning 'Thank You' page
+            return HttpResponseRedirect('/thanks/')  # Returning  'Thank You' page
 
     more_context = {
         'user_list': all_users,
