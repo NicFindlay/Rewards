@@ -5,9 +5,29 @@ from django.dispatch import receiver
 
 # Create your models here.
 
+
+#Review
+class Review(models.Model):
+    date = models.DateField('Date Sent')
+    description = models.TextField(max_length=400, blank=True)
+
+    def __str__(self):
+        return str(self.date)
+
+    @classmethod
+    def create(cls, Date, Description):
+        review = cls(date=Date, description=Description)
+        review.save()
+        return review
+
 #Company
 class Company(models.Model):
     name = models.CharField(blank="False", max_length=100)
+    reviews = models.ForeignKey(Review, on_delete=models.CASCADE, default=1)
+
+
+    def __str__(self):
+        return str(self.name)
 
 #User profile
 class Profile(models.Model):

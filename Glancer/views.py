@@ -131,14 +131,35 @@ def history(request):
 
     return render(request, 'Glancer/history.html', context)
 
+def review(request):
+    context = constructor(request)
+    current_user = find_current_user(request)  # find user who sent glance
+    form = SendGlance()
+
+
+    if request.method == 'POST':  # If submit has been clicked
+        form = SendGlance(request.POST)
+        if form.is_valid():
+
+            user.save()  # Saving User Profile instance
+            create_glance(user, request.POST.get('description'))  # Instantiating new Glance
+
+            return HttpResponseRedirect('/thanks/')  # Returning 'Thank You' page
+
+
+    more_context = {
+        'user_list': all_users,
+        'form': form,
+    }
+    context.update(more_context)
+
+    return render(request, 'Glancer/review.html', context)
+
+
 def limit(request):
 
     context = constructor(request)
 
-    more_context = {
-        'user_list': all_users,
-    }
-    context.update(more_context)
 
     return render(request, 'Glancer/limit.html', context )
 
