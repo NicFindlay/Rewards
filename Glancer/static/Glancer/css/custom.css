@@ -13,8 +13,22 @@
     background: #1b6d85;
 }
 
+footer {
+
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    overflow:hidden;
+}
+
+.main-content {
+    min-height: calc(100vh - 88px);
+    /* 80px header + 40px footer = 120px  */
+}
+
 section{
     padding: 50px 0;
+    position: relative;
 }
 
 #main-button{
