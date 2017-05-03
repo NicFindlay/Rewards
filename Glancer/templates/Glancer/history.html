@@ -1,0 +1,28 @@
+{% extends 'Glancer/base.html' %}
+
+{% block content %}
+
+<section id="features" class="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
+                    <p><br></p>
+                    <h2 style="text-align: center">History of {{ username }}!</h2>
+
+                    <p><br></p>
+
+                    {% for glance in list_glances %}
+                        <p>{{ glance.date }}, {{ glance.description }}</p>
+
+                    {% endfor %}
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+</section>
+{% endblock %}

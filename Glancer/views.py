@@ -7,6 +7,7 @@ from django.contrib.auth.views import login, logout
 from datetime import date
 
 all_users = Profile.objects.order_by('user__first_name')
+all_glances = Glance.objects.order_by('receiver')
 # Create your views here.
 
 def check_authentication(request, *args, **kwargs):
@@ -16,7 +17,6 @@ def check_authentication(request, *args, **kwargs):
 def find_current_user(request):
     for user in all_users:
         if user.user_id == request.user.id:
-            print("XXXSSS")
             return user
     return None
 
@@ -111,10 +111,20 @@ def thanks(request):
     return render(request, 'Glancer/thanks.html', context )
 
 def history(request):
-
     context = constructor(request)
+
+    user_glances = 0
+    list_glances = []
+    for glance in all_glances:
+        if str(glance.receiver_id) == str(request.user.id):
+            user_glances = user_glances + 1
+            list_glances.append(glance)
+
     more_context = {
         'user_list': all_users,
+        'user_glances' : user_glances,
+        'list_glances' : list_glances,
+
     }
     context.update(more_context)
 
