@@ -25,9 +25,18 @@ class Company(models.Model):
     name = models.CharField(blank="False", max_length=100)
     reviews = models.ForeignKey(Review, on_delete=models.CASCADE, default=1)
 
-
     def __str__(self):
         return str(self.name)
+
+    # Profile automatically created/updated when we create/update User instances
+    @receiver(post_save, sender=User)
+    def create_company_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_company_profile(sender, instance, **kwargs):
+        instance.profile.save()
 
 #User profile
 class Profile(models.Model):

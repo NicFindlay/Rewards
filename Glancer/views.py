@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Glance, Profile
+from .models import Glance, Profile, Company, Review
 from django.contrib.auth.models import User
-from .forms import SendGlance
+from .forms import SendGlance, AnonymousReview
 from django.contrib.auth.views import login, logout
 from datetime import date
 
 all_users = Profile.objects.order_by('user__first_name')
 all_glances = Glance.objects.order_by('receiver')
+all_companies = Company.objects.order_by('name')
 # Create your views here.
 
 def check_authentication(request, *args, **kwargs):
@@ -134,18 +135,14 @@ def history(request):
 def review(request):
     context = constructor(request)
     current_user = find_current_user(request)  # find user who sent glance
-    form = SendGlance()
-
+    form = AnonymousReview()
 
     if request.method == 'POST':  # If submit has been clicked
-        form = SendGlance(request.POST)
+        form = AnonymousReview(request.POST)
         if form.is_valid():
-
-            user.save()  # Saving User Profile instance
-            create_glance(user, request.POST.get('description'))  # Instantiating new Glance
-
+            current_user.company.save()  # Saving company instance
+            Review.create(date.today(), request.POST.get('review'))  # Instantiating new Review Object
             return HttpResponseRedirect('/thanks/')  # Returning 'Thank You' page
-
 
     more_context = {
         'user_list': all_users,
@@ -157,10 +154,7 @@ def review(request):
 
 
 def limit(request):
-
     context = constructor(request)
-
-
     return render(request, 'Glancer/limit.html', context )
 
 
@@ -175,7 +169,6 @@ def create_glance(user, description):
 
 
 def constructor(request):
-
     # Get username and check authenticity
     authentic = False
     username = None
